@@ -2,24 +2,49 @@
 % Please edit documentation in R/edist.R
 \name{edist}
 \alias{edist}
-\title{Energy Distance}
+\title{Lagged Energy Distance}
 \usage{
-edist(.data, type = c("upto", "paired"), lag = 0L, a = 1, weights = NULL)
+edist(.data, type = c("1", "2"), lag = 0L, a = 1, weights = NULL)
 }
 \arguments{
 \item{.data}{\code{tsibble} object.}
 
-\item{type}{character representing type of lagged energy distance.}
+\item{type}{character determining the type of lagged energy distance.}
 
 \item{lag}{number of lags.}
 
-\item{a}{coefficient for energy distance.}
+\item{a}{index for energy distance. Must be in \eqn{(0, 2]}.}
 
-\item{weights}{optional vector of weights to use when \code{type} is "paired".}
+\item{weights}{optional vector of length \code{lag} + 1 when \code{type} is 2.
+Overrides \code{lag} when incompatible.}
 }
 \value{
-a \code{dist} object
+A \code{dist} object.
 }
 \description{
-Energy Distance
+Calculates pairwise lagged energy distances among multivariate time series.
+}
+\details{
+The type 1 dissimilarity between two \eqn{p}-variate time series
+\eqn{\{X_t\}_{t=1}^{m}} and \eqn{\{Y_t\}_{t=1}^{n}} is the energy
+distance between the lagged joint distribution upto lag \eqn{h} given by
+\deqn{D_1(X,Y; h) = 2S_h(X,Y) - S_h(X,X) - S_h(Y,Y),}
+where
+\deqn{S_h(X,Y) = \sum_{s=1}^{m} \sum_{t = 1}^{n} \|X_{s:s+h} - Y_{t:t+h}\|_F^\alpha / (m-h)(n-h),}
+\eqn{X_{t:t+h} = (X_{t},\ldots,X_{t+h})},
+\eqn{Y_{t:t+h} = (Y_{t},\ldots,Y_{t+h})} are \eqn{p \times (h + 1)}
+matrices, \eqn{\|\cdot\|_F} is the Frobenius norm, and \eqn{\alpha} = \code{a}.
+
+The type 2 dissimilarity is the weighted sum
+\deqn{D_2 (X,Y; w) = w_0D_1(X,Y;0)+w_1\tilde{D}(X,Y;1)+
+w_2\tilde{D}(X,Y;2)+\ldots+w_h\tilde{D}(X,Y; h),}
+where \eqn{w = (w_0,\ldots,w_h)} are the \code{weights}, and \eqn{\tilde{D}_k(X,Y)}
+is the energy distance between the joint distributions at lag \eqn{k}.
+The latter is given by
+\deqn{\tilde{D} (X,Y; k) = 2T_k(X,Y) - T_k(X,X) - T_k(Y,Y),}
+where
+\deqn{T_k(X,Y) = \sum_{s=1}^{m} \sum_{t=1}^{n} \|X_{t.k} -Y_{t.k}\|_F^\alpha / (m-k)(n-k),}
+and \eqn{X_{t.k} = (X_t, X_{t + k})}, \eqn{Y_{t.k} = (Y_t, Y_{t + k})} are
+\eqn{p \times 2} matrices.
+Note that \eqn{\tilde{D}(X,Y; 0) = \sqrt{2} D_1(X,Y;0)}.
 }
