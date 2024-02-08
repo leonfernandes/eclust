@@ -4,19 +4,28 @@
 \alias{edist}
 \title{Lagged Energy Distance}
 \usage{
-edist(.data, type = c("1", "2"), lag = 0L, a = 1, weights = NULL)
+edist(
+  x,
+  type = c("1", "2"),
+  lag = 0L,
+  weights = c(numeric(lag), 1),
+  a = 1,
+  ...
+)
 }
 \arguments{
-\item{.data}{\code{tsibble} object.}
+\item{x}{an object.}
 
 \item{type}{character determining the type of lagged energy distance.}
 
 \item{lag}{number of lags.}
 
-\item{a}{index for energy distance. Must be in \eqn{(0, 2]}.}
-
 \item{weights}{optional vector of length \code{lag} + 1 when \code{type} is 2.
 Overrides \code{lag} when incompatible.}
+
+\item{a}{index for energy distance. Must be in \eqn{(0, 2]}.}
+
+\item{...}{unused.}
 }
 \value{
 A \code{dist} object.
@@ -36,15 +45,16 @@ where
 matrices, \eqn{\|\cdot\|_F} is the Frobenius norm, and \eqn{\alpha} = \code{a}.
 
 The type 2 dissimilarity is the weighted sum
-\deqn{D_2 (X,Y; w) = w_0D_1(X,Y;0)+w_1\tilde{D}(X,Y;1)+
+\deqn{D_2(X,Y; w) = w_0D_1(X,Y;0)+w_1\tilde{D}(X,Y;1)+
 w_2\tilde{D}(X,Y;2)+\ldots+w_h\tilde{D}(X,Y; h),}
-where \eqn{w = (w_0,\ldots,w_h)} are the \code{weights}, and \eqn{\tilde{D}_k(X,Y)}
+where \eqn{w = (w_0,\ldots,w_h)} are the \code{weights}, and \eqn{\tilde{D}(X,Y;k)}
 is the energy distance between the joint distributions at lag \eqn{k}.
 The latter is given by
-\deqn{\tilde{D} (X,Y; k) = 2T_k(X,Y) - T_k(X,X) - T_k(Y,Y),}
+\deqn{\tilde{D}(X,Y;k) = 2T_k(X,Y) - T_k(X,X) - T_k(Y,Y),}
 where
 \deqn{T_k(X,Y) = \sum_{s=1}^{m} \sum_{t=1}^{n} \|X_{t.k} -Y_{t.k}\|_F^\alpha / (m-k)(n-k),}
-and \eqn{X_{t.k} = (X_t, X_{t + k})}, \eqn{Y_{t.k} = (Y_t, Y_{t + k})} are
+and \eqn{X_{t.k} = (X_t,X_{t+k})}, \eqn{Y_{t.k} = (Y_t,Y_{t+k})} are
 \eqn{p \times 2} matrices.
-Note that \eqn{\tilde{D}(X,Y; 0) = \sqrt{2} D_1(X,Y;0)}.
+Note that \eqn{T_0(X,Y) = 2^{\alpha/2} S_0(X,Y)}, so that
+\eqn{\tilde{D}(X,Y;0) = 2^{\alpha/2} D_1(X,Y;0)}.
 }
