@@ -23,3 +23,14 @@ Overrides \code{lag} when incompatible.}
 \description{
 See \link{edist}.
 }
+\examples{
+\dontrun{
+d1 <-
+     tsibbledata::aus_livestock() |>
+     edist(lag = 2)
+
+d2 <-
+     tsibbledata::aus_livestock() |>
+     edist(type = "2", lag = 2)
+}
+}

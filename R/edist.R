@@ -61,13 +61,20 @@ edist.matrix <-
 #' @param x a `tsibble` object.
 #' @inheritParams edist.matrix
 #' @export
+#' @examples
+#' \dontrun{
+#' d1 <-
+#'      tsibbledata::aus_livestock() |>
+#'      edist(lag = 2)
+#'
+#' d2 <-
+#'      tsibbledata::aus_livestock() |>
+#'      edist(type = "2", lag = 2)
+#' }
 edist.tbl_ts <-
     function(
         x, type = c("1", "2"), lag = 0L, weights = rep(1, lag + 1), a = 1, ...
     ) {
-        if (!tsibble::is_tsibble(x)) {
-            rlang::abort(".data is not a tsibble object.")
-        }
         mv <- tsibble::measured_vars(x)
         grouped <-
             x |>

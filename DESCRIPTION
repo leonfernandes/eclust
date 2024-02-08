@@ -1,6 +1,6 @@
 Package: eclust
 Title: Time Series Clustering using Energy Distance
-Version: 0.0.0.9005
+Version: 0.0.0.9006
 Authors@R: 
     person("Leon", "Fernandes", , "leon.fernandes@columbia.edu", role = c("aut", "cre"),
            comment = c(ORCID = "0000-0002-7192-9939"))
@@ -19,3 +19,5 @@ Imports:
     vctrs (>= 0.6.3)
 LinkingTo: 
     Rcpp
+Suggests: 
+    tsibbledata (>= 0.4.1)
