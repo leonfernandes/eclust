@@ -4,7 +4,7 @@
 \alias{edist.tbl_ts}
 \title{Lagged Energy Distance for Tsibbles}
 \usage{
-\method{edist}{tbl_ts}(x, type, lag, weights, a)
+\method{edist}{tbl_ts}(x, type = c("1", "2"), lag = 0L, weights = rep(1, lag + 1), a = 1, ...)
 }
 \arguments{
 \item{x}{a \code{tsibble} object.}
@@ -17,6 +17,8 @@
 Overrides \code{lag} when incompatible.}
 
 \item{a}{index for energy distance. Must be in \eqn{(0, 2]}.}
+
+\item{...}{unused.}
 }
 \description{
 See \link{edist}.

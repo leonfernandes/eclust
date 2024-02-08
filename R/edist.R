@@ -26,29 +26,45 @@
 #' Note that \eqn{T_0(X,Y) = 2^{\alpha/2} S_0(X,Y)}, so that
 #' \eqn{\tilde{D}(X,Y;0) = 2^{\alpha/2} D_1(X,Y;0)}.
 #' @param x an object.
-#' @param type character determining the type of lagged energy distance.
-#' @param lag number of lags.
-#' @param weights optional vector of length `lag` + 1 when `type` is 2.
-#'  Overrides `lag` when incompatible.
-#' @param a index for energy distance. Must be in \eqn{(0, 2]}.
 #' @param ... unused.
 #' @return A `dist` object.
 #' @export
 edist <-
     function(
-        x, type = c("1", "2"), lag = 0L, weights = c(numeric(lag), 1.0), a = 1,
-        ...
+        x, ...
     ) {
         UseMethod("edist")
     }
 
+#' @title Lagged Energy Distance for Matrices
+#' @description See [eclust::edist].
+#' @param type character determining the type of lagged energy distance.
+#' @param lag number of lags.
+#' @param weights optional vector of length `lag` + 1 when `type` is 2.
+#'  Overrides `lag` when incompatible.
+#' @param a index for energy distance. Must be in \eqn{(0, 2]}.
+#' @param x a `matrix`.
+#' @param sizes numeric vector of sample sizes.
+#' @param group_ids character vector of names for each grouped time series.
+#' @param ... unused.
+#' @export
+edist.matrix <-
+    function(
+        x, sizes, group_ids = NULL, type = c("1", "2"), lag = 0L,
+        weights = rep(1, lag + 1), a = 1, ...
+    ) {
+        edist_impl(x, sizes, group_ids, type, lag, weights, a)
+    }
+
 #' @title Lagged Energy Distance for Tsibbles
 #' @description See [eclust::edist].
-#' @inheritParams edist
 #' @param x a `tsibble` object.
+#' @inheritParams edist.matrix
 #' @export
 edist.tbl_ts <-
-    function(x, type, lag, weights, a) {
+    function(
+        x, type = c("1", "2"), lag = 0L, weights = rep(1, lag + 1), a = 1, ...
+    ) {
         if (!tsibble::is_tsibble(x)) {
             rlang::abort(".data is not a tsibble object.")
         }
@@ -83,21 +99,9 @@ edist.tbl_ts <-
         edist_impl(y, sizes, keys, type, lag, weights, a)
     }
 
-#' @title Lagged Energy Distance for Matrices
-#' @description See [eclust::edist].
-#' @inheritParams edist
-#' @param x a `matrix`
-#' @param sizes numeric vector of sample sizes
-#' @param group_ids character vector of names for each grouped time series
-#' @export
-edist.matrix <-
-    function(x, sizes, group_ids = NULL, type, lag, weight, a) {
-        edist_impl(x, sizes, group_ids, type, lag, weights, a)
-    }
-
 
 edist_impl <-
-    function(x, sizes, group_ids, type, lag, weights, a = 1) {
+    function(x, sizes, group_ids, type = c("1", "2"), lag, weights, a) {
         stopifnot(
             is.numeric(x), is.matrix(x), is.numeric(sizes), is.numeric(lag)
         )
@@ -108,7 +112,7 @@ edist_impl <-
                 "1" = energy_distance_mat(x, sizes, lag, a),
                 "2" = energy_distance_mat(x, sizes, weights, a)
             )
-        if (!is.null(group_ids) & (length(sizes) == length(group_ids))) {
+        if (!is.null(group_ids) && (length(sizes) == length(group_ids))) {
             row.names(out) <- group_ids
         }
         return(stats::as.dist(out))

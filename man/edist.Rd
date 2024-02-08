@@ -4,26 +4,10 @@
 \alias{edist}
 \title{Lagged Energy Distance}
 \usage{
-edist(
-  x,
-  type = c("1", "2"),
-  lag = 0L,
-  weights = c(numeric(lag), 1),
-  a = 1,
-  ...
-)
+edist(x, ...)
 }
 \arguments{
 \item{x}{an object.}
-
-\item{type}{character determining the type of lagged energy distance.}
-
-\item{lag}{number of lags.}
-
-\item{weights}{optional vector of length \code{lag} + 1 when \code{type} is 2.
-Overrides \code{lag} when incompatible.}
-
-\item{a}{index for energy distance. Must be in \eqn{(0, 2]}.}
 
 \item{...}{unused.}
 }
