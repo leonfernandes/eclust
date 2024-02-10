@@ -29,12 +29,7 @@
 #' @param ... unused.
 #' @return A `dist` object.
 #' @export
-edist <-
-    function(
-        x, ...
-    ) {
-        UseMethod("edist")
-    }
+edist <- function(x, ...) UseMethod("edist")
 
 #' @title Lagged Energy Distance for Matrices
 #' @description See [eclust::edist].
