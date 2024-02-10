@@ -110,15 +110,17 @@ edist.tbl_ts <-
 edist_impl <-
     function(x, sizes, group_ids, type = c("1", "2"), lag, weights, a) {
         stopifnot(
-            is.numeric(x), is.matrix(x), is.numeric(sizes), is.numeric(lag)
+            is.numeric(x), is.matrix(x), is.numeric(sizes), is.numeric(a)
         )
         type <- match.arg(type)
         out <-
-            switch(
-                type,
-                "1" = energy_distance_mat(x, sizes, lag, a),
-                "2" = energy_distance_mat(x, sizes, weights, a)
-            )
+            if (type == 1) {
+                stopifnot(is.numeric(lag))
+                energy_distance_mat(x, sizes, lag, a)
+            } else {
+                stopifnot(is.numeric(weights))
+                energy_distance_mat(x, sizes, weights, a)
+            }
         if (!is.null(group_ids) && (length(sizes) == length(group_ids))) {
             row.names(out) <- group_ids
         }
