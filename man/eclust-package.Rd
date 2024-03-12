@@ -16,7 +16,13 @@ Journal of Time Series Analysis, 44: 487-504.
 https://doi.org/10.1111/jtsa.12688
 }
 \author{
-\strong{Maintainer}: Leon Fernandes \email{leon.fernandes@columbia.edu} (\href{https://orcid.org/0000-0002-7192-9939}{ORCID})
+\strong{Maintainer}: Leon Fernandes \email{leon.fernandes@columbia.com} (\href{https://orcid.org/0000-0002-7192-9939}{ORCID})
+
+Authors:
+\itemize{
+  \item Richard A. Davis \email{rdavis@stat.columbia.edu} (\href{https://orcid.org/0000-0001-6936-3772}{ORCID})
+  \item Konstantinos Fokianos \email{fokianos.konstantinos@ucy.ac.cy} (\href{https://orcid.org/0000-0002-0051-711X}{ORCID})
+}
 
 }
 \keyword{internal}

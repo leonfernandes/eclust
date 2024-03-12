@@ -1,9 +1,27 @@
 Package: eclust
 Title: Time Series Clustering using Energy Distance
-Version: 0.0.0.9008
-Authors@R: 
-    person("Leon", "Fernandes", , "leon.fernandes@columbia.edu", role = c("aut", "cre"),
-           comment = c(ORCID = "0000-0002-7192-9939"))
+Version: 0.0.0.9009
+Authors@R:
+    c(
+        person(
+            "Leon", "Fernandes",
+            email = "leon.fernandes@columbia.com",
+            role = c("aut", "cre"),
+            comment = c(ORCID = "0000-0002-7192-9939")
+        ),
+        person(
+            "Richard A.", "Davis",
+            email = "rdavis@stat.columbia.edu",
+            role = c("aut"),
+            comment = c(ORCID = "0000-0001-6936-3772")
+        ),
+        person(
+            "Konstantinos", "Fokianos",
+            email = "fokianos.konstantinos@ucy.ac.cy",
+            role = c("aut"),
+            comment = c(ORCID = "0000-0002-0051-711X")
+        )
+    )
 Maintainer: Leon Fernandes <leon.fernandes@columbia.edu>
 Description: This package implements the multivariate time series clustering algorithm from Davis et al. 2022 (doi: 10.1111/jtsa.12688). The method is based on a pairwise multivariate distance covaraince metric followed by a hierarchical clustering procedure to obtain the final clusters.
 License: MIT + file LICENSE
