@@ -17,7 +17,7 @@ You can install the development version of eclust like so:
 
 ``` r
 #install.packages("pak")
-pak::pkg_install("leonfernadnes/eclust")
+pak::pkg_install("leonfernandes/eclust")
 ```
 
 ## Demonstration for `gdp`
