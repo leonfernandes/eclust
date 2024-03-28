@@ -1,24 +1,13 @@
----
-output: github_document
----
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
-
-```{r, include = FALSE}
-knitr::opts_chunk$set(
-  collapse = TRUE,
-  comment = "#>",
-  fig.path = "man/figures/README-",
-  out.width = "100%"
-)
-```
 
 # eclust
 
 <!-- badges: start -->
+
 <!-- badges: end -->
 
-The goal of eclust is to ...
+The goal of eclust is to …
 
 ## Installation
 
@@ -31,17 +20,38 @@ pak::pkg_install("leonfernadnes/eclust")
 
 ## Demonstration for `gdp`
 
-We demonstrate the clustering method for the `gdp` dataset provided with this package, sourced from [https://www.conference-board.org/us/](https://www.conference-board.org/us/).
+We demonstrate the clustering method for the `gdp` dataset provided with
+this package, sourced from <https://www.conference-board.org/us/>.
 
-```{r setup}
+``` r
 library(eclust)
 library(tsibble)
+#> 
+#> Attaching package: 'tsibble'
+#> The following objects are masked from 'package:base':
+#> 
+#>     intersect, setdiff, union
 gdp
+#> # A tsibble: 920 x 3 [1Y]
+#> # Key:       country [23]
+#>    country    year    gdp
+#>    <chr>     <dbl>  <dbl>
+#>  1 Australia  1980 431329
+#>  2 Australia  1981 449122
+#>  3 Australia  1982 450019
+#>  4 Australia  1983 447042
+#>  5 Australia  1984 477014
+#>  6 Australia  1985 501031
+#>  7 Australia  1986 511606
+#>  8 Australia  1987 537039
+#>  9 Australia  1988 559356
+#> 10 Australia  1989 585267
+#> # ℹ 910 more rows
 ```
 
 We preprocess the data to obtain the log returns of the gdp.
 
-```{r}
+``` r
 gdp_log_return <-
   gdp |>
   dplyr::group_by(country) |>
@@ -54,14 +64,16 @@ gdp_log_return <-
 
 Calculate the energy distance based dissimilarity matrix.
 
-```{r}
+``` r
 dist_mat <- edist(gdp_log_return, lag = 1)
 ```
 
 Perform hierarchical clustering and display the obtained dendrogram.
 
-```{r}
+``` r
 library(ggplot2)
 hc <- stats::hclust(dist_mat, method = "ward.D2")
 plot(hc)
 ```
+
+<img src="man/figures/README-unnamed-chunk-4-1.png" width="100%" />

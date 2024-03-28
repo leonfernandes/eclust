@@ -60,7 +60,7 @@ double energy_distance_xyh(
     vi = x[Range(i * p, i * p + p_new - 1)];
     for (int j = i + 1; j < m_new; ++j)
     {
-      vj = y[Range(j * p, j * p + p_new - 1)];
+      vj = x[Range(j * p, j * p + p_new - 1)];
       sumxx += std::pow(euclidean_norm(p_new), a);
     }
   }

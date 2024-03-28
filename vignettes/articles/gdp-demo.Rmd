@@ -1,41 +1,18 @@
 ---
-output: github_document
+title: "Energy Distance Clustering of GDP Data"
 ---
-
-<!-- README.md is generated from README.Rmd. Please edit that file -->
 
 ```{r, include = FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
-  comment = "#>",
-  fig.path = "man/figures/README-",
-  out.width = "100%"
+  comment = "#>"
 )
 ```
-
-# eclust
-
-<!-- badges: start -->
-<!-- badges: end -->
-
-The goal of eclust is to ...
-
-## Installation
-
-You can install the development version of eclust like so:
-
-``` r
-#install.packages("pak")
-pak::pkg_install("leonfernadnes/eclust")
-```
-
-## Demonstration for `gdp`
 
 We demonstrate the clustering method for the `gdp` dataset provided with this package, sourced from [https://www.conference-board.org/us/](https://www.conference-board.org/us/).
 
 ```{r setup}
 library(eclust)
-library(tsibble)
 gdp
 ```
 
