@@ -7,7 +7,9 @@
 
 <!-- badges: end -->
 
-The goal of eclust is to …
+The goal of eclust is to implement the clustering algorithm from [Davis,
+R.A., Fernandes, L. and Fokianos, K.
+(2023)](https://onlinelibrary.wiley.com/doi/10.1111/jtsa.12688).
 
 ## Installation
 
