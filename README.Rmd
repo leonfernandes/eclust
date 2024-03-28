@@ -36,7 +36,8 @@ We demonstrate the clustering method for the `gdp` dataset provided with this pa
 ```{r setup}
 library(eclust)
 library(tsibble)
-gdp
+library(ggplot2)
+dplyr::glimpse(gdp)
 ```
 
 We preprocess the data to obtain the log returns of the gdp.
@@ -48,8 +49,13 @@ gdp_log_return <-
   dplyr::mutate(gdp = log(gdp) - dplyr::lag(log(gdp))) |>
   tidyr::drop_na() |>
   dplyr::mutate(gdp = as.numeric(scale(gdp))) |>
-  dplyr::rename(gdp_logreturn = gdp) |>
+  dplyr::rename(gdp_log_return = gdp) |>
   dplyr::ungroup()
+
+ggplot(gdp_log_return) +
+  aes(year, gdp_log_return, color = country) +
+  geom_line() +
+  theme_classic()
 ```
 
 Calculate the energy distance based dissimilarity matrix.
@@ -61,7 +67,6 @@ dist_mat <- edist(gdp_log_return, lag = 1)
 Perform hierarchical clustering and display the obtained dendrogram.
 
 ```{r}
-library(ggplot2)
 hc <- stats::hclust(dist_mat, method = "ward.D2")
 plot(hc)
 ```

@@ -33,22 +33,14 @@ library(tsibble)
 #> The following objects are masked from 'package:base':
 #> 
 #>     intersect, setdiff, union
-gdp
-#> # A tsibble: 920 x 3 [1Y]
-#> # Key:       country [23]
-#>    country    year    gdp
-#>    <chr>     <dbl>  <dbl>
-#>  1 Australia  1980 431329
-#>  2 Australia  1981 449122
-#>  3 Australia  1982 450019
-#>  4 Australia  1983 447042
-#>  5 Australia  1984 477014
-#>  6 Australia  1985 501031
-#>  7 Australia  1986 511606
-#>  8 Australia  1987 537039
-#>  9 Australia  1988 559356
-#> 10 Australia  1989 585267
-#> # ℹ 910 more rows
+library(ggplot2)
+dplyr::glimpse(gdp)
+#> Rows: 920
+#> Columns: 3
+#> Key: country [23]
+#> $ country <chr> "Australia", "Australia", "Australia", "Australia", "Australia…
+#> $ year    <dbl> 1980, 1981, 1982, 1983, 1984, 1985, 1986, 1987, 1988, 1989, 19…
+#> $ gdp     <dbl> 431329, 449122, 450019, 447042, 477014, 501031, 511606, 537039…
 ```
 
 We preprocess the data to obtain the log returns of the gdp.
@@ -60,9 +52,16 @@ gdp_log_return <-
   dplyr::mutate(gdp = log(gdp) - dplyr::lag(log(gdp))) |>
   tidyr::drop_na() |>
   dplyr::mutate(gdp = as.numeric(scale(gdp))) |>
-  dplyr::rename(gdp_logreturn = gdp) |>
+  dplyr::rename(gdp_log_return = gdp) |>
   dplyr::ungroup()
+
+ggplot(gdp_log_return) +
+  aes(year, gdp_log_return, color = country) +
+  geom_line() +
+  theme_classic()
 ```
+
+<img src="man/figures/README-unnamed-chunk-2-1.png" width="100%" />
 
 Calculate the energy distance based dissimilarity matrix.
 
@@ -73,7 +72,6 @@ dist_mat <- edist(gdp_log_return, lag = 1)
 Perform hierarchical clustering and display the obtained dendrogram.
 
 ``` r
-library(ggplot2)
 hc <- stats::hclust(dist_mat, method = "ward.D2")
 plot(hc)
 ```
