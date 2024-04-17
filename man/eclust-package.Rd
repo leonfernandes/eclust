@@ -2,8 +2,8 @@
 % Please edit documentation in R/eclust-package.R
 \docType{package}
 \name{eclust-package}
+\alias{eclust}
 \alias{eclust-package}
-\alias{_PACKAGE}
 \alias{{eclust}-package}
 \title{eclust: Time Series Clustering using Energy Distance}
 \description{
