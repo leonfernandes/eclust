@@ -5,12 +5,14 @@
 \alias{gdp}
 \title{GDP Data of 23 Countries}
 \format{
-\code{gdp}
+\subsection{\code{gdp}}{
+
 A \link[tsibble:tsibble]{tsibble::tsibble} of 920 rows and 3 columns:
 \describe{
 \item{country}{Country name}
 \item{year}{Year}
 \item{gdp}{GDP value}
+}
 }
 }
 \source{
