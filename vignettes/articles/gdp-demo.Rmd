@@ -26,7 +26,8 @@ gdp_log_return <-
   tidyr::drop_na() |>
   dplyr::mutate(gdp = as.numeric(scale(gdp))) |>
   dplyr::rename(gdp_logreturn = gdp) |>
-  dplyr::ungroup()
+  dplyr::ungroup() |>
+  tsibble::tsibble(key = country, index = year)
 ```
 
 Calculate the energy distance based dissimilarity matrix.
